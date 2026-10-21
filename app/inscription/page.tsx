@@ -26,16 +26,20 @@ function InscriptionForm() {
     if (isClientOnly) setFormData(prev => ({ ...prev, role: "client" }));
   }, [isClientOnly]);
 
-  const handleInscription = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleInscription = async (e: React.FormEvent) => {
+    e.preventDefault(); // 1. On bloque le rechargement de la page
     setMessage("");
     setIsLoading(true);
 
+    // 2. On force le rôle client si on vient de la page de commande
+    const finalData = isClientOnly ? { ...formData, role: "client" } : formData;
+
     try {
+      // 3. On envoie les données (finalData au lieu de formData)
       const response = await fetch("https://sunu-tailleur-backend.onrender.com/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalData), 
       });
 
       const data = await response.json();
