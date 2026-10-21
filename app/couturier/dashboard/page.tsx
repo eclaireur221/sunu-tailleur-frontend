@@ -22,14 +22,14 @@ export default function CouturierDashboard() {
   commandeActiveRef.current = commandeActive;
 
   const chargerCommandes = (couturierId: number) => {
-    fetch(`http://localhost:4000/api/commandes/couturier/${couturierId}`)
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/couturier/${couturierId}`)
       .then(res => res.json())
       .then(data => setCommandes(data))
       .catch(err => console.error(err));
   };
 
   const chargerMessages = (commandeId: number) => {
-    fetch(`http://localhost:4000/api/commandes/${commandeId}/messages`)
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeId}/messages`)
       .then(res => res.json())
       .then(data => setMessages(data))
       .catch(err => console.error(err));
@@ -86,7 +86,7 @@ export default function CouturierDashboard() {
     e.preventDefault();
     if (!nouveauMessage.trim() || !commandeActive) return;
     try {
-      const response = await fetch(`http://localhost:4000/api/commandes/${commandeActive}/messages`, {
+      const response = await fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeActive}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ expediteur_id: user.id, contenu: nouveauMessage }),
@@ -100,7 +100,7 @@ export default function CouturierDashboard() {
 
   const validerPrix = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/commandes/${id}/fixer-prix`, {
+      const response = await fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${id}/fixer-prix`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -117,7 +117,7 @@ export default function CouturierDashboard() {
 
   const handleChangerStatut = async (id: number, nouveauStatut: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/commandes/${id}/statut`, {
+      const response = await fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${id}/statut`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ statut: nouveauStatut }),
@@ -182,7 +182,7 @@ export default function CouturierDashboard() {
                   <div className="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div className="flex items-center space-x-4">
                       {cmd.modele_photos && cmd.modele_photos[0] && (
-                        <img src={`http://localhost:4000${cmd.modele_photos[0]}`} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
+                        <img src={`https://sunu-tailleur-backend.onrender.com${cmd.modele_photos[0]}`} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
                       )}
                       <div>
                         <p className="font-bold text-gray-900">{cmd.modele_titre}</p>

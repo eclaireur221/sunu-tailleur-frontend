@@ -47,7 +47,7 @@ export default function CommanderPage({ params }: { params: Promise<{ id: string
     };
 
     try {
-      const response = await fetch("http://localhost:4000/api/commandes/creer", {
+      const response = await fetch("https://sunu-tailleur-backend.onrender.com/api/commandes/creer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commandeData),

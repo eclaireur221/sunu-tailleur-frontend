@@ -11,8 +11,8 @@ export default function AdminDashboard() {
   const [onglet, setOnglet] = useState("utilisateurs");
 
   const chargerDonnees = () => {
-    fetch("http://localhost:4000/api/admin/utilisateurs").then(res => res.json()).then(data => setUtilisateurs(data));
-    fetch("http://localhost:4000/api/admin/commandes").then(res => res.json()).then(data => setCommandes(data));
+    fetch("https://sunu-tailleur-backend.onrender.com/api/admin/utilisateurs").then(res => res.json()).then(data => setUtilisateurs(data));
+    fetch("https://sunu-tailleur-backend.onrender.com/api/admin/commandes").then(res => res.json()).then(data => setCommandes(data));
   };
 
   useEffect(() => {
@@ -26,19 +26,19 @@ export default function AdminDashboard() {
   }, [router]);
 
   const validerCouturier = async (id: number) => {
-    await fetch(`http://localhost:4000/api/admin/verifier-couturier/${id}`, { method: "PUT" });
+    await fetch(`https://sunu-tailleur-backend.onrender.com/api/admin/verifier-couturier/${id}`, { method: "PUT" });
     chargerDonnees();
   };
 
   const supprimerUtilisateur = async (id: number) => {
     if (window.confirm("Supprimer définitivement ce compte ?")) {
-      await fetch(`http://localhost:4000/api/admin/utilisateur/${id}`, { method: "DELETE" });
+      await fetch(`https://sunu-tailleur-backend.onrender.com/api/admin/utilisateur/${id}`, { method: "DELETE" });
       chargerDonnees();
     }
   };
 
   const suspendreUtilisateur = async (id: number, suspenduActuel: boolean) => {
-    await fetch(`http://localhost:4000/api/admin/suspendre/${id}`, {
+    await fetch(`https://sunu-tailleur-backend.onrender.com/api/admin/suspendre/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ suspendu: !suspenduActuel }),

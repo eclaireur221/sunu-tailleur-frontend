@@ -28,7 +28,7 @@ export default function ProfilClientPage() {
     setUser(parsedUser);
 
     // Charger les commandes du client connecté
-    fetch(`http://localhost:4000/api/commandes/client/${parsedUser.id}`)
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/client/${parsedUser.id}`)
       .then(res => res.json())
       .then(data => setCommandes(data))
       .catch(err => console.error(err));

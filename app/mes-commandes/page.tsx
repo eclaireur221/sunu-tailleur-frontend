@@ -14,7 +14,7 @@ export default function MesCommandesPage() {
 
   // Fonction pour charger les commandes
   const chargerCommandes = (clientId: number) => {
-    fetch(`http://localhost:4000/api/commandes/client/${clientId}`)
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/client/${clientId}`)
       .then(res => res.json())
       .then(data => {
         setCommandes(data);
@@ -66,7 +66,7 @@ export default function MesCommandesPage() {
 
   const ouvrirChat = (id: number) => {
     setCommandeActive(id);
-    fetch(`http://localhost:4000/api/commandes/${id}/messages`)
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${id}/messages`)
       .then(res => res.json())
       .then(data => setMessages(data));
   };
@@ -76,7 +76,7 @@ export default function MesCommandesPage() {
     if (!nouveauMessage.trim() || !commandeActive || !user) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/commandes/${commandeActive}/messages`, {
+      const response = await fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeActive}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ expediteur_id: user.id, contenu: nouveauMessage }),
@@ -84,7 +84,7 @@ export default function MesCommandesPage() {
 
       if (response.ok) {
         setNouveauMessage("");
-        fetch(`http://localhost:4000/api/commandes/${commandeActive}/messages`)
+        fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeActive}/messages`)
           .then(res => res.json())
           .then(data => setMessages(data));
       }
@@ -125,7 +125,7 @@ export default function MesCommandesPage() {
                 <div className="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div className="flex items-center space-x-4">
                     {cmd.modele_photos && cmd.modele_photos[0] && (
-                      <img src={`http://localhost:4000${cmd.modele_photos[0]}`} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
+                      <img src={`https://sunu-tailleur-backend.onrender.com${cmd.modele_photos[0]}`} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
                     )}
                     <div>
                       <p className="font-bold text-gray-900">{cmd.modele_titre}</p>

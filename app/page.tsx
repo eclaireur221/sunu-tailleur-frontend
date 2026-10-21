@@ -7,7 +7,7 @@ export default function Home() {
   const [modeles, setModeles] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/modeles/tous")
+    fetch("https://sunu-tailleur-backend.onrender.com/api/modeles/tous")
       .then((res) => res.json())
       .then((data) => setModeles(data))
       .catch((err) => console.error(err));
@@ -117,7 +117,7 @@ export default function Home() {
                   <div key={modele.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group flex flex-col">
                     <div className="relative overflow-hidden">
                       <img 
-                        src={`http://localhost:4000${modele.photos[0]}`} 
+                        src={`https://sunu-tailleur-backend.onrender.com${modele.photos[0]}`} 
                         alt={modele.titre} 
                         className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
                       />
