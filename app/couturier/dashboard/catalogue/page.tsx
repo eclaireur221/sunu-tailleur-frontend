@@ -108,7 +108,7 @@ export default function CatalogueCouturier() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {modeles.map((modele) => (
             <div key={modele.id} className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-              <img src={`https://sunu-tailleur-backend.onrender.com${modele.photos[0]}`} alt={modele.titre} className="w-full h-48 object-cover" />
+              <img src={modele.photos[0]} alt={modele.titre} className="w-full h-48 object-cover" />
               <div className="p-4">
                 <h3 className="font-bold text-lg text-gray-900">{modele.titre}</h3>
                 <p className="text-gray-500 text-sm">{modele.prix_min} - {modele.prix_max} FCFA</p>

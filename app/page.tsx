@@ -116,7 +116,7 @@ export default function Home() {
                   <div key={modele.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group flex flex-col">
                     <div className="relative overflow-hidden h-56 md:h-72">
                       <img 
-                        src={`https://sunu-tailleur-backend.onrender.com${modele.photos[0]}`} 
+                        src={modele.photos[0]}
                         alt={modele.titre} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />

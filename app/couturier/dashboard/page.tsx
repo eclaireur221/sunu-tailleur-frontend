@@ -182,7 +182,7 @@ export default function CouturierDashboard() {
                   <div className="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div className="flex items-center space-x-4">
                       {cmd.modele_photos && cmd.modele_photos[0] && (
-                        <img src={`https://sunu-tailleur-backend.onrender.com${cmd.modele_photos[0]}`} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
+                        <img src={cmd.modele_photos[0]} alt="Modèle" className="..." />
                       )}
                       <div>
                         <p className="font-bold text-gray-900">{cmd.modele_titre}</p>
