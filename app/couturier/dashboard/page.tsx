@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function CouturierDashboard() {
@@ -8,30 +8,17 @@ export default function CouturierDashboard() {
   const [user, setUser] = useState<any>(null);
   const [commandes, setCommandes] = useState<any[]>([]);
   
-  // États pour le chat
   const [commandeActive, setCommandeActive] = useState<number | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [nouveauMessage, setNouveauMessage] = useState("");
 
-  // États pour la négociation
   const [prixFinal, setPrixFinal] = useState("");
   const [delaiFinal, setDelaiFinal] = useState("");
-
-  // Référence pour savoir quelle commande est ouverte dans le chat
-  const commandeActiveRef = useRef<number | null>(null);
-  commandeActiveRef.current = commandeActive;
 
   const chargerCommandes = (couturierId: number) => {
     fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/couturier/${couturierId}`)
       .then(res => res.json())
       .then(data => setCommandes(data))
-      .catch(err => console.error(err));
-  };
-
-  const chargerMessages = (commandeId: number) => {
-    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeId}/messages`)
-      .then(res => res.json())
-      .then(data => setMessages(data))
       .catch(err => console.error(err));
   };
 
@@ -45,31 +32,17 @@ export default function CouturierDashboard() {
     }
 
     const parsedUser = JSON.parse(userData);
-
     if (parsedUser.role === "client") {
       router.push("/profil");
       return;
     }
 
     setUser(parsedUser);
-    const cId = parsedUser.couturier_id || parsedUser.id;
-
+    
     if (parsedUser.verifie) {
+      const cId = parsedUser.couturier_id || parsedUser.id;
       chargerCommandes(cId); 
     }
-
-    // RAFRAÎCHISSEMENT AUTOMATIQUE TOUTES LES 5 SECONDES
-    const interval = setInterval(() => {
-      if (parsedUser.verifie) {
-        chargerCommandes(cId);
-      }
-      // Si un chat est ouvert, on recharge aussi les messages
-      if (commandeActiveRef.current) {
-        chargerMessages(commandeActiveRef.current);
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
   }, [router]);
 
   const ouvrirChat = (id: number) => {
@@ -79,7 +52,11 @@ export default function CouturierDashboard() {
       setPrixFinal(cmd.prix_propose.toString());
       setDelaiFinal(cmd.delai_propose_jours.toString());
     }
-    chargerMessages(id);
+
+    fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${id}/messages`)
+      .then(res => res.json())
+      .then(data => setMessages(data))
+      .catch(err => console.error(err));
   };
 
   const envoyerMessage = async (e: React.FormEvent) => {
@@ -93,7 +70,9 @@ export default function CouturierDashboard() {
       });
       if (response.ok) {
         setNouveauMessage("");
-        chargerMessages(commandeActive);
+        fetch(`https://sunu-tailleur-backend.onrender.com/api/commandes/${commandeActive}/messages`)
+          .then(res => res.json())
+          .then(data => setMessages(data));
       }
     } catch (error) { console.error(error); }
   };
@@ -182,7 +161,7 @@ export default function CouturierDashboard() {
                   <div className="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div className="flex items-center space-x-4">
                       {cmd.modele_photos && cmd.modele_photos[0] && (
-                        <img src={cmd.modele_photos[0]} alt="Modèle" className="..." />
+                        <img src={cmd.modele_photos[0]} alt="Modèle" className="w-16 h-16 object-cover rounded-md" />
                       )}
                       <div>
                         <p className="font-bold text-gray-900">{cmd.modele_titre}</p>
@@ -243,26 +222,9 @@ export default function CouturierDashboard() {
                         <div className="mb-4 bg-blue-50 p-4 rounded-lg border border-blue-100">
                           <p className="text-sm font-bold text-blue-800 mb-2">Fixer le prix et le délai final :</p>
                           <div className="flex gap-2 items-center">
-                            <input 
-                              type="number" 
-                              placeholder="Prix final (FCFA)" 
-                              value={prixFinal} 
-                              onChange={e => setPrixFinal(e.target.value)} 
-                              className="border p-2 rounded text-sm w-1/3 text-gray-900" 
-                            />
-                            <input 
-                              type="number" 
-                              placeholder="Délai final (jours)" 
-                              value={delaiFinal} 
-                              onChange={e => setDelaiFinal(e.target.value)} 
-                              className="border p-2 rounded text-sm w-1/3 text-gray-900" 
-                            />
-                            <button 
-                              onClick={() => validerPrix(cmd.id)} 
-                              className="bg-green-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-green-700 w-1/3"
-                            >
-                              Valider l'accord
-                            </button>
+                            <input type="number" placeholder="Prix final (FCFA)" value={prixFinal} onChange={e => setPrixFinal(e.target.value)} className="border p-2 rounded text-sm w-1/3 text-gray-900" />
+                            <input type="number" placeholder="Délai final (jours)" value={delaiFinal} onChange={e => setDelaiFinal(e.target.value)} className="border p-2 rounded text-sm w-1/3 text-gray-900" />
+                            <button onClick={() => validerPrix(cmd.id)} className="bg-green-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-green-700 w-1/3">Valider l'accord</button>
                           </div>
                         </div>
                       )}

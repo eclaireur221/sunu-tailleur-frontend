@@ -34,7 +34,6 @@ export default function CatalogueCouturier() {
 
     setUser(parsedUser);
 
-    // On utilise le couturier_id (et non user.id) pour charger les modèles
     const cId = parsedUser.couturier_id || parsedUser.id;
     fetch(`https://sunu-tailleur-backend.onrender.com/api/modeles/couturier/${cId}`)
       .then(res => res.json())
@@ -47,7 +46,6 @@ export default function CatalogueCouturier() {
     setMessage("Ajout en cours...");
 
     const formData = new FormData();
-    // On utilise le couturier_id
     const cId = user.couturier_id || user.id;
     formData.append("couturier_id", cId);
     

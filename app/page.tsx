@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
-      {/* Barre de navigation - Version Mobile et Desktop */}
+      {/* Barre de navigation */}
       <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center py-4 md:h-20">
@@ -24,7 +24,6 @@ export default function Home() {
                 Sunu<span className="text-blue-600">Tailleur</span>
               </span>
             </div>
-            {/* Les liens sont maintenant visibles sur téléphone */}
             <div className="flex flex-wrap justify-center gap-4 items-center">
               <a href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">Accueil</a>
               <a href="/mes-commandes" className="text-gray-600 hover:text-blue-600 font-medium transition">Mes Commandes</a>
@@ -51,7 +50,6 @@ export default function Home() {
               Découvrez les meilleurs stylistes et couturiers du Sénégal. Choisissez votre modèle, donnez vos mesures et commandez en toute confiance.
             </p>
             
-            {/* Barre de recherche */}
             <div className="max-w-2xl mx-auto bg-white rounded-full shadow-xl p-2 flex items-center border border-gray-100">
               <input 
                 type="text" 
@@ -65,7 +63,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Section "Comment ça marche" */}
         <div className="bg-white py-12 md:py-16 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8 md:mb-12">Comment ça marche ?</h2>
@@ -90,8 +87,6 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          
-          {/* Affichage de la Carte */}
           <div className="mb-12 md:mb-20">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-2">
               Tailleurs autour de vous
@@ -99,7 +94,6 @@ export default function Home() {
             <Carte />
           </div>
           
-          {/* Liste des modèles */}
           <div>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 gap-2">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Dernières créations</h2>
@@ -116,7 +110,7 @@ export default function Home() {
                   <div key={modele.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group flex flex-col">
                     <div className="relative overflow-hidden h-56 md:h-72">
                       <img 
-                        src={modele.photos[0]}
+                        src={modele.photos[0]} 
                         alt={modele.titre} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -152,7 +146,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer simple */}
       <footer className="bg-gray-900 text-white py-8 md:py-12 mt-8 md:mt-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Sunu Tailleur</p>
